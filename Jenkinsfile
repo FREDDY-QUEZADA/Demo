@@ -25,7 +25,11 @@ pipeline {
         }
       }
     }
-   
+    stage('Publish Dependency-Check Report') {
+      steps {
+        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+      }
+    }
 
     stage ('PMD SpotBugs') {
       steps {
