@@ -8,10 +8,13 @@ pipeline {
 
   stages {
     stage('Build') {
-      steps {
-        withMaven(maven : 'mvn-3.6.3') {
-          sh "mvn package"
-        }
+      script {
+            def mvnHome = tool 'mvn-3.6.3'
+            def maven = "${mvnHome}/bin/mvn" // Ruta al ejecutable 'mvn' de Maven
+
+            withEnv(["PATH+MAVEN=${mvnHome}/bin"]) {
+                sh "${maven} package"
+            }
       }
     }
 
