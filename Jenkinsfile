@@ -21,7 +21,7 @@ pipeline {
     stage('OWASP Dependency-Check Vulnerabilities') {
       steps {
         withMaven(maven: 'mvn-3.6.3') {
-          sh 'mvn dependency-check:check'
+          sh 'mvn org.owasp:dependency-check-maven:check'
         }
       }
     }
