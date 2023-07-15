@@ -18,7 +18,8 @@ pipeline {
             }
       }
     }
-    }
+    } 
+  }
 
     stage ('OWASP Dependency-Check Vulnerabilities') {
       steps {
@@ -34,7 +35,7 @@ pipeline {
         dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
       }
       }
-    }
+    
 
     stage ('PMD SpotBugs') {
       steps {
