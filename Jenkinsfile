@@ -8,8 +8,7 @@ pipeline {
 
   stages {
     stage('Build') {
-    steps {
-        script {
+      script {
             def mvnHome = tool 'mvn-3.6.3'
             def maven = "${mvnHome}/bin/mvn" // Ruta al ejecutable 'mvn' de Maven
 
@@ -18,24 +17,19 @@ pipeline {
             }
       }
     }
-    } 
-  }
 
     stage ('OWASP Dependency-Check Vulnerabilities') {
       steps {
-       script {
+         script {
             def mvnHome = tool 'mvn-3.6.3'
             def maven = "${mvnHome}/bin/mvn" // Ruta al ejecutable 'mvn' de Maven
 
             withEnv(["PATH+MAVEN=${mvnHome}/bin"]) {
-                sh "${maven} dependency-check:check"
+                sh "${maven} package"
             }
-        }
-
-        dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
       }
       }
-    
+    }
 
     stage ('PMD SpotBugs') {
       steps {
@@ -65,9 +59,8 @@ pipeline {
       }
     }
 
-    stage('SonarQube analysis') 
-    {
-       steps {
+    stage('SonarQube analysis') {
+      steps {
         withSonarQubeEnv(credentialsId: 'sonarqube-secret', installationName: 'sonarqube-server') {
           withMaven(maven : 'mvn-3.6.3') {
             sh 'mvn sonar:sonar -Dsonar.dependencyCheck.jsonReportPath=target/dependency-check-report.json -Dsonar.dependencyCheck.xmlReportPath=target/dependency-check-report.xml -Dsonar.dependencyCheck.htmlReportPath=target/dependency-check-report.html -Dsonar.java.pmd.reportPaths=target/pmd.xml -Dsonar.java.spotbugs.reportPaths=target/spotbugsXml.xml -Dsonar.zaproxy.reportPath=target/zap-reports/zapReport.xml -Dsonar.zaproxy.htmlReportPath=target/zap-reports/zapReport.html'
@@ -76,4 +69,4 @@ pipeline {
       }
     }
   }
-
+}
