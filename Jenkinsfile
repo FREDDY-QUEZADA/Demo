@@ -27,7 +27,12 @@ pipeline {
     }
     stage('Publish Dependency-Check Report') {
       steps {
-        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        dependencyCheck additionalArguments: ''' 
+        -o "./" 
+        -s "./"
+        -f "ALL" 
+        --prettyPrint''', odcInstallation: 'dependency-check-6.0.3'
+        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
       }
     }
 
