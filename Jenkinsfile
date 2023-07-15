@@ -19,27 +19,29 @@ pipeline {
       }
     }
     stage('Run Tests') {
-      script {
-        def testsResults = [:] // Variable para almacenar los resultados de las pruebas
-        // Subetapa OWASP Dependency-Check Vulnerabilities
-        testsResults["OWASP Dependency-Check Vulnerabilities"] = sh returnStatus: true, script: 'mvn dependency-check:check'
-        // Subetapa PMD SpotBugs
-        testsResults["PMD SpotBugs"] = sh returnStatus: true, script: 'mvn pmd:pmd pmd:cpd spotbugs:spotbugs'
-        // Registrar problemas de OWASP Dependency-Check
-        recordIssues enabledForFailure: true, tools: dependencyCheck(pattern: 'target/dependency-check-report.xml')
-        // Registrar problemas de SpotBugs
-        recordIssues enabledForFailure: true, tools: spotBugs()
-        // Registrar problemas de CPD
-        recordIssues enabledForFailure: true, tools: cpd(pattern: '**/target/cpd.xml')
-        // Registrar problemas de PMD
-        recordIssues enabledForFailure: true, tools: pmdParser(pattern: '**/target/pmd.xml')
+       steps {
+         script {
+           def testsResults = [:] // Variable para almacenar los resultados de las pruebas
+          // Subetapa OWASP Dependency-Check Vulnerabilities
+           testsResults["OWASP Dependency-Check Vulnerabilities"] = sh returnStatus: true, script: 'mvn dependency-check:check'
+          // Subetapa PMD SpotBugs
+           testsResults["PMD SpotBugs"] = sh returnStatus: true, script: 'mvn pmd:pmd pmd:cpd spotbugs:spotbugs'
+          // Registrar problemas de OWASP Dependency-Check
+           recordIssues enabledForFailure: true, tools: dependencyCheck(pattern: 'target/dependency-check-report.xml')
+          // Registrar problemas de SpotBugs
+           recordIssues enabledForFailure: true, tools: spotBugs()
+          // Registrar problemas de CPD
+           recordIssues enabledForFailure: true, tools: cpd(pattern: '**/target/cpd.xml')
+          // Registrar problemas de PMD
+           recordIssues enabledForFailure: true, tools: pmdParser(pattern: '**/target/pmd.xml')
         // Verificar el estado de los resultados de las pruebas y marcar el build como fallido si alguna subetapa falla
-        testsResults.each { subStage, result ->
-          if (result != 0) {
-            error("Fallo en la subetapa: $subStage")
-          }
-        }
-      }
+           testsResults.each { subStage, result ->
+             if (result != 0) {
+               error("Fallo en la subetapa: $subStage")
+             }
+           }
+         }
+       }
     }
 
     stage ('ZAP') {
