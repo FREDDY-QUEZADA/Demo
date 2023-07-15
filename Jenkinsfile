@@ -22,11 +22,17 @@ pipeline {
 
     stage ('OWASP Dependency-Check Vulnerabilities') {
       steps {
-        withMaven(maven : 'mvn-3.6.3') {
-          sh 'mvn dependency-check:check'
+       script {
+            def mvnHome = tool 'mvn-3.6.3'
+            def maven = "${mvnHome}/bin/mvn" // Ruta al ejecutable 'mvn' de Maven
+
+            withEnv(["PATH+MAVEN=${mvnHome}/bin"]) {
+                sh "${maven} dependency-check:check"
+            }
         }
 
         dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+      }
       }
     }
 
