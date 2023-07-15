@@ -8,7 +8,8 @@ pipeline {
 
   stages {
     stage('Build') {
-     script {
+    steps {
+        script {
             def mvnHome = tool 'mvn-3.6.3'
             def maven = "${mvnHome}/bin/mvn" // Ruta al ejecutable 'mvn' de Maven
 
