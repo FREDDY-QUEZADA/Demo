@@ -23,8 +23,9 @@ pipeline {
         withMaven(maven: 'mvn-3.6.3') {
           sh 'mvn org.owasp:dependency-check-maven:check'
         }
+        dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
       }
-      dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+      
     }
     
     stage ('PMD SpotBugs') {
