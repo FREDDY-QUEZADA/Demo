@@ -107,7 +107,7 @@
                 </executions>
             </plugin>
             <!-- static source code analysis -->
-            <!-- checkstyle checks style. not security related coding errors, etc
+           
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -135,7 +135,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            -->
+          
             <!-- static source code analysis -->
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
