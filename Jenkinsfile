@@ -31,8 +31,10 @@ pipeline {
     
     stage ('PMD SpotBugs') {
       steps {
-        withMaven(maven : 'mvn-3.6.3') {
-          sh 'mvn pmd:pmd pmd:cpd spotbugs:spotbugs'
+        script {
+          withMaven(maven: 'mvn-3.6.3') {
+            sh 'mvn pmd:pmd pmd:cpd spotbugs:spotbugs'
+          }
         }
         recordIssues enabledForFailure: true, tool: spotBugs()
         recordIssues enabledForFailure: true, tool: cpd(pattern: '**/target/cpd.xml')
