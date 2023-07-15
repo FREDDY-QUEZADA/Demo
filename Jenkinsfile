@@ -18,13 +18,15 @@ pipeline {
         }
       }
     }
-
-    stage ('OWASP Dependency-Check Vulnerabilities') {
+    stage('OWASP Dependency-Check Vulnerabilities') {
       steps {
-        withMaven(maven : 'mvn-3.6.3') {
+        withMaven(maven: 'mvn-3.6.3') {
           sh 'mvn dependency-check:check'
         }
-
+      }
+    }
+    stage('Publish Dependency-Check Report') {
+      steps {
         dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
       }
     }
