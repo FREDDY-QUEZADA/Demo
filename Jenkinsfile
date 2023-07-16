@@ -5,9 +5,8 @@ pipeline {
     jdk 'jdk-11'
     maven 'mvn-3.6.3'
   }
-
-  stages {
-    stage('Build') {
+  
+  stage('Build') {
       steps {
         script {
           def mvnHome = tool 'mvn-3.6.3'
@@ -21,13 +20,15 @@ pipeline {
 
  stage ('OWASP Dependency-Check Vulnerabilities') {
    steps {
-     withMaven(maven : 'mvn-3.6.3') {
-       sh 'mvn dependency-check:check'  
-       dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-     }
+     dependencyCheck additionalArguments: ''' 
+     -o "./" 
+     -s "./"
+     -f "ALL" 
+     --prettyPrint''', odcInstallation: 'OWASP'
+     dependencyCheckPublisher pattern: 'dependency-check-report.xml'
    }
  }
-    stage ('PMD SpotBugs') {
+  stage ('PMD SpotBugs') {
       steps {
         withMaven(maven : 'mvn-3.6.3') {
           sh 'mvn pmd:pmd pmd:cpd spotbugs:spotbugs'
