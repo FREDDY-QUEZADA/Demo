@@ -137,45 +137,23 @@
             </plugin>
           
             <!-- static source code analysis -->
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.2.0</version>
-                <configuration>
-                    <effort>Max</effort>
-                    <threshold>Low</threshold>
-                    <failOnError>false</failOnError>
-                    <includeFilterFile>src/main/resources/spotbugs-security-include.xml</includeFilterFile>
-                    <excludeFilterFile>src/main/resources/spotbugs-security-exclude.xml</excludeFilterFile>
-                    <plugins>
-                        <plugin>
-                            <groupId>com.h3xstream.findsecbugs</groupId>
-                            <artifactId>findsecbugs-plugin</artifactId>
-                            <version>LATEST</version> <!-- Auto-update to the latest stable -->
-                        </plugin>
-                    </plugins>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
-                    <dependency>
-                        <groupId>com.github.spotbugs</groupId>
-                        <artifactId>spotbugs</artifactId>
-                        <version>4.2.1</version>
-                    </dependency>
-                </dependencies>
+            <plugin><groupId>com.github.spotbugs</groupId>
+                     <artifactId>spotbugs-maven-plugin</artifactId>
+                     <version>4.7.2.1</version>
+                     <dependencies>
+                              <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+                              <dependency>
+                                       <groupId>com.github.spotbugs</groupId>
+                                       <artifactId>spotbugs</artifactId>
+                                       <version>4.7.3</version>
+                              </dependency>
+                     </dependencies>
             </plugin>
             <!-- static source code analysis -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.14.0</version>
+                <version>3.15.0</version>
                 <configuration>
                     <failOnViolation>true</failOnViolation>
                     <failurePriority>1</failurePriority>
@@ -270,23 +248,17 @@
             </plugin>
             <!-- Spotbugs report -->
             <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.2.0</version>
-                <configuration>
-                    <effort>Max</effort>
-                    <threshold>Low</threshold>
-                    <failOnError>false</failOnError>
-                    <includeFilterFile>src/main/resources/spotbugs-security-include.xml</includeFilterFile>
-                    <excludeFilterFile>src/main/resources/spotbugs-security-exclude.xml</excludeFilterFile>
-                    <plugins>
-                        <plugin>
-                            <groupId>com.h3xstream.findsecbugs</groupId>
-                            <artifactId>findsecbugs-plugin</artifactId>
-                            <version>LATEST</version> <!-- Auto-update to the latest stable -->
-                        </plugin>
-                    </plugins>
-                </configuration>
+                     <groupId>com.github.spotbugs</groupId>
+                     <artifactId>spotbugs-maven-plugin</artifactId>
+                     <version>4.7.2.1</version>
+                     <dependencies>
+                              <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+                              <dependency>
+                                       <groupId>com.github.spotbugs</groupId>
+                                       <artifactId>spotbugs</artifactId>
+                                       <version>4.7.3</version>
+                              </dependency>
+                     </dependencies>
             </plugin>
             <!-- not security related
             <plugin>
