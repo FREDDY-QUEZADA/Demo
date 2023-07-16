@@ -5,7 +5,7 @@ pipeline {
     jdk 'jdk-11'
     maven 'mvn-3.6.3'
   }
-  
+  stages {
   stage('Build') {
       steps {
         script {
@@ -17,8 +17,7 @@ pipeline {
         }
       }
     }
-
- stage ('OWASP Dependency-Check Vulnerabilities') {
+   stage ('OWASP Dependency-Check Vulnerabilities') {
    steps {
      dependencyCheck additionalArguments: ''' 
      -o "./" 
@@ -28,7 +27,8 @@ pipeline {
      dependencyCheckPublisher pattern: 'dependency-check-report.xml'
    }
  }
-  stage ('PMD SpotBugs') {
+ 
+    stage ('PMD SpotBugs') {
       steps {
         withMaven(maven : 'mvn-3.6.3') {
           sh 'mvn pmd:pmd pmd:cpd spotbugs:spotbugs'
@@ -65,3 +65,7 @@ pipeline {
     }
   }
 }
+    
+    
+
+
